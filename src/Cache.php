@@ -11,7 +11,6 @@
 
 namespace think\sae;
 
-use think\Cache;
 use think\Exception;
 
 /**
