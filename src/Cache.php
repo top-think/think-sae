@@ -39,7 +39,7 @@ class Cache
         if (!function_exists('sae_debug')) {
             throw new \BadFunctionCallException('must run at sae');
         }
-        $this->handler = new Memcached();
+        $this->handler = new \Memcached();
         if (!$this->handler) {
             throw new Exception('memcache init error');
         }
