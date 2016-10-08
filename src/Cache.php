@@ -36,10 +36,10 @@ class Cache
      */
     public function __construct($options = [])
     {
-        if (!function_exists('memcache_init')) {
+        if (!function_exists('sae_debug')) {
             throw new \BadFunctionCallException('must run at sae');
         }
-        $this->handler = memcache_init();
+        $this->handler = new \Memcached();
         if (!$this->handler) {
             throw new Exception('memcache init error');
         }
@@ -73,7 +73,7 @@ class Cache
             $expire = $this->options['expire'];
         }
         $name = $this->options['prefix'] . $name;
-        if ($this->handler->set($_SERVER['HTTP_APPVERSION'] . '/' . $name, $value, 0, $expire)) {
+        if ($this->handler->set($_SERVER['HTTP_APPVERSION'] . '/' . $name, $value, $expire)) {
             return true;
         }
         return false;

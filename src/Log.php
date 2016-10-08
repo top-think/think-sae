@@ -59,11 +59,11 @@ class Log
             $is_debug = in_array($_SERVER['HTTP_APPVERSION'], explode(',', $appSettings['debug'])) ? true : false;
         }
         if ($is_debug) {
-            sae_set_display_errors(false); //记录日志不将日志打印出来
+            ini_set("display_errors", "off"); //记录日志不将日志打印出来
         }
         sae_debug($logstr);
         if ($is_debug) {
-            sae_set_display_errors(true);
+            ini_set("display_errors", "on");
         }
         return true;
     }

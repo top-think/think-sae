@@ -26,10 +26,10 @@ class Template
      */
     public function __construct()
     {
-        if (!function_exists('memcache_init')) {
+        if (!function_exists('sae_debug')) {
             throw new Exception('请在SAE平台上运行代码。');
         }
-        $this->mc = @memcache_init();
+        $this->mc = new \Memcached();
         if (!$this->mc) {
             throw new Exception('您未开通Memcache服务，请在SAE管理平台初始化Memcache服务');
         }
@@ -45,7 +45,7 @@ class Template
     {
         // 添加写入时间
         $content = $_SERVER['REQUEST_TIME'] . $content;
-        if (!$this->mc->set($cacheFile, $content, MEMCACHE_COMPRESSED, 0)) {
+        if (!$this->mc->set($cacheFile, $content, 0)) {
             throw new Exception('sae mc write error:' . $cacheFile);
         } else {
             $this->contents[$cacheFile] = $content;
