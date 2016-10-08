@@ -29,7 +29,7 @@ class Template
         if (!function_exists('sae_debug')) {
             throw new Exception('请在SAE平台上运行代码。');
         }
-        $this->mc = new Memcached();
+        $this->mc = new \Memcached();
         if (!$this->mc) {
             throw new Exception('您未开通Memcache服务，请在SAE管理平台初始化Memcache服务');
         }
