@@ -2,13 +2,12 @@
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2006~2016 http://thinkphp.cn All rights reserved.
+// | Copyright (c) 2006~2017 http://thinkphp.cn All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-
 namespace think\sae;
 
 use think\Exception;
@@ -26,11 +25,11 @@ class Template
      */
     public function __construct()
     {
-        if (!function_exists('sae_debug')) {
+        if (! function_exists('sae_debug')) {
             throw new Exception('请在SAE平台上运行代码。');
         }
         $this->mc = new \Memcached();
-        if (!$this->mc) {
+        if (! $this->mc) {
             throw new Exception('您未开通Memcache服务，请在SAE管理平台初始化Memcache服务');
         }
     }
@@ -45,7 +44,7 @@ class Template
     {
         // 添加写入时间
         $content = $_SERVER['REQUEST_TIME'] . $content;
-        if (!$this->mc->set($cacheFile, $content, 0)) {
+        if (! $this->mc->set($cacheFile, $content, 0)) {
             throw new Exception('sae mc write error:' . $cacheFile);
         } else {
             $this->contents[$cacheFile] = $content;
@@ -55,13 +54,13 @@ class Template
 
     /**
      * 读取编译编译
-     * @param string  $cacheFile 缓存的文件名
-     * @param array   $vars 变量数组
+     * @param string $cacheFile 缓存的文件名
+     * @param array $vars 变量数组
      * @return void
      */
     public function read($cacheFile, $vars = [])
     {
-        if (!empty($vars) && is_array($vars)) {
+        if (! empty($vars) && is_array($vars)) {
             extract($vars, EXTR_OVERWRITE);
         }
         eval('?>' . $this->get($cacheFile, 'content'));
@@ -69,8 +68,8 @@ class Template
 
     /**
      * 检查编译缓存是否有效
-     * @param string  $cacheFile 缓存的文件名
-     * @param int     $cacheTime 缓存时间
+     * @param string $cacheFile 缓存的文件名
+     * @param int $cacheTime 缓存时间
      * @return boolean
      */
     public function check($cacheFile, $cacheTime)
@@ -86,23 +85,23 @@ class Template
     /**
      * 读取文件信息
      * @access private
-     * @param string $filename  文件名
-     * @param string $name  信息名 mtime或者content
+     * @param string $filename 文件名
+     * @param string $name 信息名 mtime或者content
      * @return boolean
      */
     private function get($filename, $name)
     {
-        if (!isset($this->contents[$filename])) {
+        if (! isset($this->contents[$filename])) {
             $this->contents[$filename] = $this->mc->get($filename);
         }
         $content = $this->contents[$filename];
-
+        
         if (false === $content) {
             return false;
         }
         $info = array(
-            'mtime'   => substr($content, 0, 10),
-            'content' => substr($content, 10),
+            'mtime' => substr($content, 0, 10),
+            'content' => substr($content, 10)
         );
         return $info[$name];
     }
