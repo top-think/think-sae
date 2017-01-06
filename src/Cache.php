@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2006~2016 http://thinkphp.cn All rights reserved.
+// | Copyright (c) 2006~2017 http://thinkphp.cn All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
@@ -47,7 +47,18 @@ class Cache
             $this->options = array_merge($this->options, $options);
         }
     }
-
+    
+    /**
+     * 判断缓存是否存在
+     * @access public
+     * @param string $name 缓存变量名
+     * @return bool
+     */
+    public function has($name)
+    {
+        return $this->get($name) ? true : false;
+    }
+    
     /**
      * 读取缓存
      * @access public
@@ -79,6 +90,40 @@ class Cache
         return false;
     }
 
+    /**
+     * 自增缓存（针对数值缓存）
+     * @access public
+     * @param string $name 缓存变量名
+     * @param int $step 步长
+     * @return false|int
+     */
+    public function inc($name, $step = 1)
+    {
+        if ($this->has($name)) {
+            $value = $this->get($name) + $step;
+        } else {
+            $value = $step;
+        }
+        return $this->set($name, $value, 0) ? $value : false;
+    }
+    
+    /**
+     * 自减缓存（针对数值缓存）
+     * @access public
+     * @param string $name 缓存变量名
+     * @param int $step 步长
+     * @return false|int
+     */
+    public function dec($name, $step = 1)
+    {
+        if ($this->has($name)) {
+            $value = $this->get($name) - $step;
+        } else {
+            $value = $step;
+        }
+        return $this->set($name, $value, 0) ? $value : false;
+    }
+    
     /**
      * 删除缓存
      * @param    string  $name 缓存变量名
