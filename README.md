@@ -3,19 +3,20 @@ ThinkPHP 5.1 SAE扩展
 
 添加下面的配置参数即可
 
+log.php
 ~~~
-'log'=>[
-	'type'=> '\think\sae\Log',
-]
+'type'=> '\think\sae\Log',
+~~~
 
-'template' => [
-	'type'	=>	'Think',
-	'compile_type'	=> '\think\sae\Template',
+template.php
+~~~
+'type'	=>	'Think',
+'compile_type'	=> '\think\sae\Template',
+~~~
 
-]
-'cache'=>[
-	'type'  =>  '\think\sae\Cache',
-]
+cache.php
+~~~
+'type'  =>  '\think\sae\Cache',
 ~~~
 
 数据库配置文件database.php中修改为：
