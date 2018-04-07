@@ -1,4 +1,4 @@
-ThinkPHP 5.0 SAE扩展
+ThinkPHP 5.1 SAE扩展
 ===============
 
 添加下面的配置参数即可
